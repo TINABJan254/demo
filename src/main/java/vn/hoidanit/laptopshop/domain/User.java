@@ -4,6 +4,10 @@ public class User {
     private String email, password, fullName, address, phone;
     private long id;
 
+    public User() {
+
+    }
+
     public User(long id, String email, String password, String fullName, String address, String phone){
         this.id = id;
         this.email = email;
