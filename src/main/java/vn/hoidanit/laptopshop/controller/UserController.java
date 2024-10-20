@@ -9,6 +9,8 @@ import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 
 
@@ -28,6 +30,12 @@ public class UserController {
         model.addAttribute("ban", "Hello from controller");
         return "hello";
     }
+
+    @RequestMapping("/admin/user")
+    public String getUserPage() {
+        return "admin/user/create";
+    }
+    
 }
 
 // @RestController
