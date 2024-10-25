@@ -39,11 +39,17 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         model.addAttribute("newUser", new User());
+        return "admin/user/table-user";
+    }
+
+    @RequestMapping("/admin/user/create") //Không khai báo method thì mặc định là GET
+    public String getCreateUserPage(Model model) {
+        model.addAttribute("newUser", new User());
         return "admin/user/create";
     }
 
     @RequestMapping(value = "/admin/user/create", method=RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser") User user) {
+    public String handleCreateUser(Model model, @ModelAttribute("newUser") User user) {
         System.out.println("Run here" + user);
         this.userService.handleSaveUser(user);
         return "hello";
