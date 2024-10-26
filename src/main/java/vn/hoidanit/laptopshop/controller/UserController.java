@@ -36,10 +36,13 @@ public class UserController {
         return "hello";
     }
 
-    @RequestMapping("/admin/user")
+    @RequestMapping("/admin/user") // URL
     public String getUserPage(Model model) {
         model.addAttribute("newUser", new User());
-        return "admin/user/table-user";
+
+        List<User> users = this.userService.getAllUser();
+        model.addAttribute("users", users);
+        return "admin/user/table-user"; //Dia chi vao file jsp
     }
 
     @RequestMapping("/admin/user/create") //Không khai báo method thì mặc định là GET
