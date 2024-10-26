@@ -42,7 +42,8 @@ public class UserController {
 
         List<User> users = this.userService.getAllUser();
         model.addAttribute("users", users);
-        return "admin/user/table-user"; //Dia chi vao file jsp
+        return "admin/user/table-user"; //Dia chi vao file jsp, chỉ là địa chỉ để vào file jsp render ra giao diện
+        // nhưng ko thể đổi url
     }
 
     @RequestMapping("/admin/user/create") //Không khai báo method thì mặc định là GET
@@ -55,7 +56,11 @@ public class UserController {
     public String handleCreateUser(Model model, @ModelAttribute("newUser") User user) {
         System.out.println("Run here" + user);
         this.userService.handleSaveUser(user);
-        return "hello";
+        return "redirect:/admin/user"; //redirect là chuyển hướng
+        //chuyển hướng là đổi trên url thành locallhost8080:admin/user
+        //nếu ta truyền là redirect:admin/user thì url đang là admin/user/create -> admin/user/admin/user/
+        //hiểu đơn giản là nó back lại 1 cái rồi paste thêm vào
+        //lúc này nó sẽ mapping vào RequestMapping(/admin/user) để chạy code trong đó
     }
     
     
