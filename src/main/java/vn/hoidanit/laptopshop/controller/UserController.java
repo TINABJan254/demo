@@ -63,13 +63,25 @@ public class UserController {
 
     @RequestMapping(value = "/admin/user/create", method=RequestMethod.POST)
     public String handleCreateUser(Model model, @ModelAttribute("newUser") User user) {
-        System.out.println("Run here" + user);
         this.userService.handleSaveUser(user);
         return "redirect:/admin/user"; //redirect là chuyển hướng
         //chuyển hướng là đổi trên url thành locallhost8080:admin/user
         //nếu ta truyền là redirect:admin/user thì url đang là admin/user/create -> admin/user/admin/user/
         //hiểu đơn giản là nó back lại 1 cái rồi paste thêm vào
         //lúc này nó sẽ mapping vào RequestMapping(/admin/user) để chạy code trong đó
+    }
+
+    @RequestMapping(value = "/admin/user/update", method=RequestMethod.POST)
+    public String handlerUpdateUser(Model model, @ModelAttribute("updatedUser") User user) {
+        //this.userService.handleSaveUser(user);
+        return "redirect:/admin/user"; //redirect là chuyển hướng
+    }
+
+    @RequestMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        model.addAttribute("updatedUser", new User());
+        return "admin/user/update";
     }
     
     

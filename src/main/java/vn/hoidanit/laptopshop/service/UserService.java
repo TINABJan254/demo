@@ -35,4 +35,8 @@ public class UserService {
     public User handleSaveUser(User user){
         return this.userRepository.save(user);
     }
+
+    // public User handleUpdateUser(User user){
+    //     return this.userRepository.update(user);
+    // }
 }
