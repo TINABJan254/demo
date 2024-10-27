@@ -55,9 +55,7 @@ public class UserController {
 
     @RequestMapping("/admin/user/{id}") //Không khai báo method thì mặc định là GET
     public String getUserDetailPage(Model model, @PathVariable long id) {
-        System.out.println("check path id = " + id);
-        model.addAttribute("id", id);
-        model.addAttribute("newUser", new User());
+        model.addAttribute("user", this.userService.getUserById(id));
         return "admin/user/show";
     }
 
