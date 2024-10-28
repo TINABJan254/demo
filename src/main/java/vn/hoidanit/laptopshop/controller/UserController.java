@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -71,17 +74,37 @@ public class UserController {
         //lúc này nó sẽ mapping vào RequestMapping(/admin/user) để chạy code trong đó
     }
 
-    @RequestMapping(value = "/admin/user/update", method=RequestMethod.POST)
-    public String handlerUpdateUser(Model model, @ModelAttribute("updatedUser") User user) {
-        //this.userService.handleSaveUser(user);
+    @PostMapping("/admin/user/update") //PostMapping = RequestMapping + method post
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User updatedUser) {
+        User currentUser = this.userService.getUserById(updatedUser.getId());
+        if (currentUser != null){
+            currentUser.setPhone(updatedUser.getPhone());
+            currentUser.setAddress(updatedUser.getAddress());
+            currentUser.setFullName(updatedUser.getFullName());
+            this.userService.handleSaveUser(currentUser);
+        }
+
         return "redirect:/admin/user"; //redirect là chuyển hướng
     }
 
     @RequestMapping("/admin/user/update/{id}")
     public String getUpdateUserPage(Model model, @PathVariable long id) {
-        model.addAttribute("id", id);
-        model.addAttribute("updatedUser", new User());
+        User user = this.userService.getUserById(id);
+        model.addAttribute("newUser", user);
         return "admin/user/update";
+    }
+
+    @RequestMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        model.addAttribute("currentUser", new User());
+        return "/admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("currentUser") User user) {
+        this.userService.handleDeleteUserById(user.getId());
+        return "redirect:/admin/user";
     }
     
     
