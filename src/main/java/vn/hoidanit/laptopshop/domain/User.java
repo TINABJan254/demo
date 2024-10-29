@@ -11,7 +11,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String email, password, fullName, address, phone;
+    private String email, password, fullName, address, phone, avatar;
+
+    //roleId
 
     public User() {
 
@@ -73,11 +75,18 @@ public class User {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", address=" + address
-                + ", phone=" + phone;
+    public String getAvatar() {
+        return avatar;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
+    }
 
 }
