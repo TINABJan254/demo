@@ -8,7 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+<<<<<<< HEAD
 import jakarta.persistence.OneToMany;
+=======
+>>>>>>> 15aa9c5b25e57c40eb58d1fabe696475f65ab4a9
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,10 +27,13 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+<<<<<<< HEAD
 
     @OneToMany(mappedBy = "order")
     List<OrderDetail> orderDetails;
 
+=======
+>>>>>>> 15aa9c5b25e57c40eb58d1fabe696475f65ab4a9
 
     public long getId() {
         return id;
