@@ -18,6 +18,30 @@ public class OrderDetail {
     private long quantity;
     private double price;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     public long getId() {
         return id;
     }
