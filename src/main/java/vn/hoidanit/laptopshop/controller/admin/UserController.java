@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.controller;
+package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class UserController {
 
         List<User> users = this.userService.getAllUser();
         model.addAttribute("users", users);
-        return "admin/user/table-user"; //Dia chi vao file jsp, chỉ là địa chỉ để vào file jsp render ra giao diện
+        return "admin/user/show"; //Dia chi vao file jsp, chỉ là địa chỉ để vào file jsp render ra giao diện
         // nhưng ko thể đổi url
     }
 
@@ -61,7 +61,7 @@ public class UserController {
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("id", id);
-        return "admin/user/show";
+        return "admin/user/detail";
     }
 
     @RequestMapping(value = "/admin/user/create", method=RequestMethod.POST)
