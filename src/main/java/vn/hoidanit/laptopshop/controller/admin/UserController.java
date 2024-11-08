@@ -1,31 +1,26 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.servlet.ServletContext;
 
 
 @Controller
 public class UserController {
 
     private final UserService userService;
-    private final ServletContext servletContext;
+    private final UploadService uploadService;
 
-    public UserController(UserService userService, ServletContext servletContext){
+    public UserController(UserService userService, UploadService uploadService){
         this.userService = userService;
-        this.servletContext = servletContext;
+        this.uploadService = uploadService;
     }
 
     @RequestMapping("/")
@@ -58,7 +53,7 @@ public class UserController {
         return "admin/user/detail";
     }
 
-    @GetMapping("/admin/user/create") //Không khai báo method thì m?c ??nh là GET
+    @GetMapping("/admin/user/create") //Không khai báo method thì mặc định là GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
         return "admin/user/create";
@@ -67,31 +62,8 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String handleCreateUser(Model model, @ModelAttribute("newUser") User user, @RequestParam("thienFile") MultipartFile file) {
         //this.userService.handleSaveUser(user);
-        byte[] bytes;
-        try {
-            bytes = file.getBytes();
-            String rootPath = this.servletContext.getRealPath("/resources/images");
-
-            File dir = new File(rootPath + File.separator + "avatar");
-            if (!dir.exists())
-                dir.mkdirs();
-
-            // Create the file on server
-            File serverFile = new File(dir.getAbsolutePath() + File.separator +
-                    + System.currentTimeMillis() + "-" + file.getOriginalFilename());
-                    
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-            stream.write(bytes);
-            stream.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return "redirect:/admin/user"; //redirect là chuyển hướng
-        //chuyển hướng là đổi trên url thành locallhost8080:admin/user
-        //nếu ta truyền là redirect:admin/user thì url đang là admin/user/create -> admin/user/admin/user/
-        //hiểu đơn giản là nó back lại 1 cái rồi paste thêm vào
-        //lúc này nó sẽ mapping vào RequestMapping(/admin/user) để chạy code trong đó
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        return "redirect:/admin/user";
     }
 
     @PostMapping("/admin/user/update") //PostMapping = RequestMapping + method post
