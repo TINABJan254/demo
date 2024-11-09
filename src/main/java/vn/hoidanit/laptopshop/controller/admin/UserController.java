@@ -2,9 +2,12 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -17,10 +20,12 @@ public class UserController {
 
     private final UserService userService;
     private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadService uploadService){
+    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder){
         this.userService = userService;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/")
@@ -61,8 +66,15 @@ public class UserController {
 
     @PostMapping("/admin/user/create")
     public String handleCreateUser(Model model, @ModelAttribute("newUser") User user, @RequestParam("thienFile") MultipartFile file) {
-        //this.userService.handleSaveUser(user);
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String hashedPassword = this.passwordEncoder.encode(user.getPassword());
+        System.out.println(hashedPassword);
+        Role role = this.userService.getRoleByName(user.getRole().getName());
+
+        user.setRole(role);
+        user.setAvatar(avatar);
+        user.setPassword(hashedPassword);
+        this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }
 
