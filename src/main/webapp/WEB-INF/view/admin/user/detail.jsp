@@ -15,6 +15,23 @@
     <title>Update User</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Jquery preview image -->
+    <script>
+        $(document).ready(() => {
+            const avatarPreview = $("#avatarPreview");
+
+            const avatarFileName = "${user.avatar}"; 
+            const avatarFolderPath = "/images/avatar/"; 
+
+            if (avatarFileName) {
+                const fullAvatarURL = avatarFolderPath + avatarFileName;
+                avatarPreview.attr("src", fullAvatarURL);
+                avatarPreview.css({ "display": "block" });
+            }
+        });
+    </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -44,10 +61,17 @@
                                     </div>
                                     <ul class = "list-group list-group-flush">
                                         <li class="list-group-item">ID:         ${user.id} </li>
+                                        <li class="list-group-item">Avatar:  
+                                            <div class="col-12 mb-3">
+                                                <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                                    id="avatarPreview" />
+                                            </div>
+                                        </li>
                                         <li class="list-group-item">Email:      ${user.email}  </li>
                                         <li class="list-group-item">Phone:      ${user.phone}  </li>
                                         <li class="list-group-item">Full Name:  ${user.fullName} </li>
                                         <li class="list-group-item">Address:    ${user.address} </li>
+                                        <li class="list-group-item">Role:    ${user.role.name} </li>
                                     </ul>
                                 </div>
                                 <a href="/admin/user" class="btn btn-success mt-3">Back</a>
