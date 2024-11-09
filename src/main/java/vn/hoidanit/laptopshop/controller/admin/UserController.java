@@ -66,9 +66,12 @@ public class UserController {
 
     @PostMapping("/admin/user/create")
     public String handleCreateUser(Model model, @ModelAttribute("newUser") User user, @RequestParam("thienFile") MultipartFile file) {
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        //Nếu user có chọn file
+        String avatar = "";
+        if (!file.isEmpty()) {
+            avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        }
         String hashedPassword = this.passwordEncoder.encode(user.getPassword());
-        System.out.println(hashedPassword);
         Role role = this.userService.getRoleByName(user.getRole().getName());
 
         user.setRole(role);
@@ -79,12 +82,23 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update") //PostMapping = RequestMapping + method post
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User updatedUser) {
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User updatedUser,
+            @RequestParam("thienFile") MultipartFile file) {
+
         User currentUser = this.userService.getUserById(updatedUser.getId());
+
         if (currentUser != null){
             currentUser.setPhone(updatedUser.getPhone());
             currentUser.setAddress(updatedUser.getAddress());
             currentUser.setFullName(updatedUser.getFullName());
+            currentUser.setRole(this.userService.getRoleByName(updatedUser.getRole().getName()));
+
+            if (!file.isEmpty()) {
+                // Xử lý upload file và cập nhật avatar
+                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+                currentUser.setAvatar(avatar); // Cập nhật avatar mới
+            }
+
             this.userService.handleSaveUser(currentUser);
         }
 
