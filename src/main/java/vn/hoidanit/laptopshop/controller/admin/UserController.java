@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import vn.hoidanit.laptopshop.domain.Role;
@@ -13,6 +15,8 @@ import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -65,7 +69,19 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create")
-    public String handleCreateUser(Model model, @ModelAttribute("newUser") User user, @RequestParam("thienFile") MultipartFile file) {
+    public String handleCreateUser(Model model, @ModelAttribute("newUser") @Valid User user, BindingResult bindingResult, @RequestParam("thienFile") MultipartFile file) {
+        //Validate
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors){
+            System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+        }
+
+        if (bindingResult.hasFieldErrors()){
+            System.out.println("Error");
+        } else {
+            System.out.println("No");
+        }
+        
         //Nếu user có chọn file
         String avatar = "";
         if (!file.isEmpty()) {
