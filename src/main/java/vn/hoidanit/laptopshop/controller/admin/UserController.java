@@ -75,12 +75,6 @@ public class UserController {
         for (FieldError error : errors){
             System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
         }
-
-        if (bindingResult.hasFieldErrors()){
-            System.out.println("Error");
-        } else {
-            System.out.println("No");
-        }
         
         //Nếu user có chọn file
         String avatar = "";
