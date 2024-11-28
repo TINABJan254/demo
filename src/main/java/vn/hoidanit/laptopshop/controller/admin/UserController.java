@@ -69,18 +69,19 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create")
-    public String handleCreateUser(Model model, @ModelAttribute("newUser") @Valid User user, BindingResult bindingResult, @RequestParam("thienFile") MultipartFile file) {
+    public String handleCreateUser(Model model, @ModelAttribute("newUser") @Valid User user, BindingResult newUserBindingResult, @RequestParam("thienFile") MultipartFile file) {
         //Validate
-        List<FieldError> errors = bindingResult.getFieldErrors();
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors){
-            System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
         }
         
-        //Nếu user có chọn file
-        String avatar = "";
-        if (!file.isEmpty()) {
-            avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        if (newUserBindingResult.hasErrors()){
+            return "admin/user/create";
         }
+
+        //Nếu user có chọn file
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashedPassword = this.passwordEncoder.encode(user.getPassword());
         Role role = this.userService.getRoleByName(user.getRole().getName());
 

@@ -51,10 +51,12 @@
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Email:</label>
                                         <form:input type="email" class="form-control" path = "email"/>
+                                        <form:errors path = "email"/>
                                     </div>
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Password:</label>
                                         <form:input type="password" class="form-control" path = "password"/>
+                                        <form:errors path = "password"/>
                                     </div>
                                     <div class="mb-3 col-12 col-md-6">
                                         <label class="form-label">Phone number:</label>
