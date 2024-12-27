@@ -46,7 +46,7 @@ public class UserController {
 
     @RequestMapping("/admin/user") // URL
     public String getUserPage(Model model) {
-        model.addAttribute("newUser", new User());
+        // model.addAttribute("newUser", new User());
 
         List<User> users = this.userService.getAllUser();
         model.addAttribute("users", users);
