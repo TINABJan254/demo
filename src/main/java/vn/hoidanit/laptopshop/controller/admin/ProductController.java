@@ -69,4 +69,45 @@ public class ProductController {
         model.addAttribute("id", id);
         return "admin/product/detail";
     }
+
+    @GetMapping("/admin/product/update/{id}") 
+    public String getUpdateProductPage(Model model, @PathVariable long id){
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("newProduct", product);
+        return "admin/product/update";
+    }   
+
+    @PostMapping("/admin/product/update")
+    public String postUpdateUser(Model model, @ModelAttribute("newProduct") @Valid Product updatedProduct, BindingResult updatedProductBindingResult, @RequestParam("thienFile") MultipartFile file){
+        List<FieldError> errors = updatedProductBindingResult.getFieldErrors();
+        for (FieldError error : errors){
+            System.out.println(">>>>>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (updatedProductBindingResult.hasErrors()){
+            return "/admin/product/update";
+        }
+
+
+        Product currentProduct = this.productService.getProductById(updatedProduct.getId());
+        if (currentProduct != null){
+            if (!file.isEmpty()){
+                String image = this.uploadService.handleSaveUploadFile(file, "product");
+                currentProduct.setImage(image);
+            }
+
+            currentProduct.setName(updatedProduct.getName());
+            currentProduct.setPrice(updatedProduct.getPrice());
+            currentProduct.setDetailDesc(updatedProduct.getDetailDesc());
+            currentProduct.setShortDesc(updatedProduct.getShortDesc());
+            currentProduct.setQuantity(updatedProduct.getQuantity());
+            currentProduct.setFactory(updatedProduct.getFactory());
+            currentProduct.setTarget(updatedProduct.getTarget());
+
+            this.productService.handleSaveProduct(currentProduct);
+        }
+
+
+        return "redirect:/admin/product";
+    }
 }
