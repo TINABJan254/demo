@@ -142,13 +142,13 @@
                                         </form:select>
                                     </div>
                                     <div class="mb-3 col-12 col-md-6">
-                                        <label for="avatarFile" class="form-label">Image:</label>
-                                        <input class="form-control" type="file" id="avatarFile"
+                                        <label for="imageFile" class="form-label">Image:</label>
+                                        <input class="form-control" type="file" id="imageFile"
                                             accept=".png, .jpg, .jpeg" name="thienFile" />
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <img style="max-height: 250px; display: none;" alt="avatar preview"
-                                            id="avatarPreview" />
+                                        <img style="max-height: 250px; display: none;" alt="image preview"
+                                            id="imagePreview" />
                                     </div>
                                     
                                     <div class="col-12 mb-5">

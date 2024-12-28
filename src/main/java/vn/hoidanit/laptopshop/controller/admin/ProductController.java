@@ -121,7 +121,6 @@ public class ProductController {
     @PostMapping("/admin/product/delete")
     public String postDeleteProduct(Model model, @ModelAttribute("currentProduct") Product product){
         this.productService.handleDeleteProductById(product.getId());
-        System.out.println(">>>>>>>>>>>" + product.getId());
         return "redirect:/admin/product";
     }
     
