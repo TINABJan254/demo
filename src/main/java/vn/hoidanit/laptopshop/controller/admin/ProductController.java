@@ -110,4 +110,19 @@ public class ProductController {
 
         return "redirect:/admin/product";
     }
+
+    @GetMapping("/admin/product/delete/{id}")
+    public String getDeleteProductPage(Model model, @PathVariable long id){
+        model.addAttribute("id", id);
+        model.addAttribute("currentProduct", new Product());
+        return "/admin/product/delete";
+    }
+
+    @PostMapping("/admin/product/delete")
+    public String postDeleteProduct(Model model, @ModelAttribute("currentProduct") Product product){
+        this.productService.handleDeleteProductById(product.getId());
+        System.out.println(">>>>>>>>>>>" + product.getId());
+        return "redirect:/admin/product";
+    }
+    
 }

@@ -41,7 +41,7 @@
                                 <form:form action="/admin/user/delete" method = "post" modelAttribute = "currentUser">
                                     <div class="form-group" >
                                         <label for="formGroupExampleInput" >Id:</label>
-                                        <form:input value = "${id}" type="text" class="form-control" path = "id"/>
+                                        <form:input readonly = "true" value = "${id}" type="text" class="form-control" path = "id"/>
                                     </div>
                                     <button class="btn btn-danger">Confirm</button>
                                 </form:form>
