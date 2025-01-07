@@ -1,5 +1,6 @@
 package vn.hoidanit.laptopshop.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,9 @@ public class Product {
     private String name;
     private String image;
 
+    @NotNull
     @NotEmpty(message = "Detail description must be not empty")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
 
     @NotEmpty(message = "Short description must be not empty")
