@@ -28,7 +28,7 @@ public class User {
 
     @NotNull
     @Size(min = 2, message = "Password must contain at least 2 letters.")
-    @StrongPassword(message = "Password phải có bla bla bla")
+    // @StrongPassword(message = "Password phải có bla bla bla")
     private String password;
 
     @NotNull
