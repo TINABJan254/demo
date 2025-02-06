@@ -41,14 +41,20 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .dispatcherTypeMatchers(DispatcherType.FORWARD,
-                DispatcherType.INCLUDE) .permitAll()
-                .requestMatchers("/", "/login", "/client/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE)
+                .permitAll()
+
+                .requestMatchers("/", "/product/**", "/login", "/client/**", "/css/**", "/js/**", "/images/**")
+                .permitAll()
+
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin
-                    .loginPage("/login")
-                    .failureUrl("/login?error")
-                    .permitAll());
+                
+            .formLogin(formLogin -> formLogin
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .permitAll());
         return http.build();
     }
 }
