@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 
 
 
+
 @Controller
 public class HomePageController {
 
@@ -69,5 +70,11 @@ public class HomePageController {
     public String getLoginPage(Model model) {
         return "client/auth/login";
     }
+
+    @GetMapping("/access-denied")
+    public String getAccessDeniedPage() {
+        return "client/auth/deny";
+    }
+    
 
 }
