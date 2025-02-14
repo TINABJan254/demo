@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Dự án laptopshop" />
     <meta name="author" content="FE clone" />
-    <title>Dashboard - Thiện Bản</title>
+    <title>Manage product</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -52,7 +53,9 @@
                                             <tr>
                                                 <th>${product.id}</th>
                                                 <td>${product.name}</td>
-                                                <td>${product.price}</td>
+                                                <td>
+                                                    <fmt:formatNumber type="number" value="${product.price}" /> đ
+                                                </td>
                                                 <td>${product.factory}</td>
                                                 <td>
                                                     <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
