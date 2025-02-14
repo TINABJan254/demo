@@ -56,4 +56,8 @@ public class OrderService {
             this.orderRepository.delete(orderOptional.get());
         }
     }
+
+    public long countOrders(){
+        return this.orderRepository.count();
+    }
 }
